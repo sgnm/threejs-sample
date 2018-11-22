@@ -3,65 +3,65 @@ var uniforms;
 var camera, scene, renderer;
 
 window.onload = () => {
-  let windowWidth = window.innerWidth;
-  let windowHeight = window.innerHeight;
+    let windowWidth = window.innerWidth;
+    let windowHeight = window.innerHeight;
 
-  uniforms = {
+    uniforms = {
     time: { type: "f", value: 1.0 },
     resolution: { type: "v2", value: new THREE.Vector2() }
-  };
+    };
 
-  // rendererの作成
-  renderer = new THREE.WebGLRenderer();
-  
-  // canvasをbodyに追加
-  document.body.appendChild(renderer.domElement);
+    // rendererの作成
+    renderer = new THREE.WebGLRenderer();
 
-  // canvasをリサイズ
-  renderer.setSize(windowWidth, windowHeight);
+    // canvasをbodyに追加
+    document.body.appendChild(renderer.domElement);
 
-  // scene作成
-  scene = new THREE.Scene();
-  
-  // camera作成
-  camera = new THREE.PerspectiveCamera(75, windowWidth / windowHeight, 0.1, 1000);
-  camera.position.z = 100;
+    // canvasをリサイズ
+    renderer.setSize(windowWidth, windowHeight);
 
-  // Geometry作成
-  let geometry = new THREE.PlaneBufferGeometry(windowWidth, windowHeight);
-  
-  // Material作成
-  let material = new THREE.ShaderMaterial({
+    // scene作成
+    scene = new THREE.Scene();
+
+    // camera作成
+    camera = new THREE.PerspectiveCamera(75, windowWidth / windowHeight, 0.1, 1000);
+    camera.position.z = 100;
+
+    // Geometry作成
+    let geometry = new THREE.PlaneBufferGeometry(windowWidth, windowHeight);
+
+    // Material作成
+    let material = new THREE.ShaderMaterial({
     vertexShader: document.getElementById('vertexShader').textContent,
     fragmentShader: document.getElementById('fragmentShader').textContent,
     uniforms: uniforms
-  });
-  
-  // Mesh作成
-  let mesh = new THREE.Mesh(geometry,material);
+    });
 
-  // Meshをシーンに追加
-  scene.add(mesh);
+    // Mesh作成
+    let mesh = new THREE.Mesh(geometry,material);
 
-  // uniformに値を格納
-  uniforms.resolution.value.x = windowWidth;
-  uniforms.resolution.value.y = windowHeight;
+    // Meshをシーンに追加
+    scene.add(mesh);
 
-  animate();
+    // uniformに値を格納
+    uniforms.resolution.value.x = windowWidth;
+    uniforms.resolution.value.y = windowHeight;
+
+    animate();
 };
 
 function animate()
 {
-  requestAnimationFrame(animate);
-  render();
+    requestAnimationFrame(animate);
+    render();
 }
 
 function render()
 {
-  var elapsedMilliseconds = Date.now() - startTime;
-  var elapsedSeconds = elapsedMilliseconds / 1000.;
-  uniforms.time.value = elapsedSeconds;
+    var elapsedMilliseconds = Date.now() - startTime;
+    var elapsedSeconds = elapsedMilliseconds / 1000.;
+    uniforms.time.value = elapsedSeconds;
 
-  // draw
-  renderer.render(scene, camera);
+    // draw
+    renderer.render(scene, camera);
 }
