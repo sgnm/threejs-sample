@@ -65,3 +65,7 @@ function render()
     // draw
     renderer.render(scene, camera);
 }
+
+window.onresize = () => {
+    renderer.setSize(window.innerWidth, window.innerHeight);
+}
